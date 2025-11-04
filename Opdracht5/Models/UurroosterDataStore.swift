@@ -18,7 +18,7 @@ class UurroosterDataStore {
     }
 
     private func sort(){
-        uurrooster.sort { $0.startDateTime < $1.startDateTime }
+        uurrooster.sort { $0.startDateTime > $1.startDateTime }
     }
     
     func addEvent(event: EventModel ){

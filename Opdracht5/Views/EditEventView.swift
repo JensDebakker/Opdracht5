@@ -13,7 +13,7 @@ struct EditEventView: View {
     var body: some View {
         Form {
             Section(header: Text("Event Info")) {
-                TextField("Title", text: $editableEvent.title)
+                TextField("Title", text: $editableEvent.title).tint(.red)
                 TextField("Location", text: $editableEvent.location)
                 Toggle("All day", isOn: $editableEvent.allDay)
                 Picker("Type", selection: $editableEvent.type) {
