@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct Opdracht5App: App {
+    @State private var datastore = UurroosterDataStore()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environment(datastore)
         }
     }
 }
