@@ -13,14 +13,18 @@ struct EditEventView: View {
     var body: some View {
         Form {
             Section(header: Text("Event Info")) {
-                TextField("Title", text: $editableEvent.title).tint(.red)
-                TextField("Location", text: $editableEvent.location)
+                TextField("Title", text: $editableEvent.title).tint(.accentColor).textFieldStyle(.roundedBorder)
+                TextField("Location", text: $editableEvent.location).textFieldStyle(.roundedBorder)
+                
                 Toggle("All day", isOn: $editableEvent.allDay)
+                
                 Picker("Type", selection: $editableEvent.type) {
                     Text("Academic").tag(0)
                     Text("Other").tag(1)
                 }
                 .pickerStyle(.segmented)
+                
+                
             }
 
             Section(header: Text("Timing")) {
@@ -28,17 +32,16 @@ struct EditEventView: View {
                 DatePicker("End", selection: $editableEvent.endDateTime)
             }
         }
+        .padding(40)
         .navigationTitle("Edit Event")
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Save") {
-                    datastore.updateEvent(event: editableEvent) // write changes
+        
+            HStack{
+                Button("Update") {
+                    datastore.updateEvent(event: editableEvent)
                     dismiss()
                 }
+                Button("Cancel") { dismiss() }
             }
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") { dismiss() } // discard changes
-            }
-        }
+        
     }
 }

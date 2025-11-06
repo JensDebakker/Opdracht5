@@ -14,7 +14,6 @@ struct Opdracht5App: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environment(datastore)
-                .tint(.red)
         }
     }
 }

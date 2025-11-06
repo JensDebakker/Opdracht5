@@ -3,30 +3,60 @@ import SwiftUI
 struct EventDetailView: View {
     @Bindable var event: EventModel
     @Environment(UurroosterDataStore.self) var datastore
-    @State private var showingEdit = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(event.title)
-                .font(.title)
-            Text(event.location)
-            Text("Start: \(DateUtil.formatDateTime(date: event.startDateTime))")
-            Text("Einde: \(DateUtil.formatDateTime(date: event.endDateTime))")
+        VStack(alignment: .leading) {
+                
+                
+                HStack{
+                    
+                    
+                    Text(event.title)
+                        .font(.title2.bold())
+                        .foregroundColor(.white)
+                        .lineLimit(3)
+                        
+                    
+                }.frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+                .background(.tint)
+                .cornerRadius(12)
+                    
+                    
+                Divider()
+                Text(event.location).font(.headline)
+                
+                HStack{
+                    VStack{
+                        Text("Start:")
+                        Text("Einde:")
+                    }
+                    
+                    Spacer()
+                    
+                    VStack{
+                        Text("\(DateUtil.formatDateTime(date: event.startDateTime))")
+                        Text("\(DateUtil.formatDateTime(date:    event.endDateTime))")
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                }
+                        
+                Divider()
             
-            Spacer()
+           Spacer()
             
         }
+        .frame(maxWidth: .infinity)
         .padding()
         .toolbar {
-            Button {
-                showingEdit = true
+            NavigationLink {
+                EditEventView(event: event)
+                    .environment(datastore)
             } label: {
                 Label("Edit", systemImage: "ellipsis")
             }
-        }
-        .sheet(isPresented: $showingEdit) {
-            EditEventView(event: event)
-                .environment(datastore)
         }
     }
 }

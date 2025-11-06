@@ -1,11 +1,3 @@
-//
-//  AddEventView.swift
-//  Opdracht5
-//
-//  Created by Jens Debakker on 04/11/2025.
-//
-
-
 import SwiftUI
 
 struct AddEventView: View {
@@ -21,22 +13,32 @@ struct AddEventView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
-                TextField("Title", text: $title)
-                TextField("Location", text: $location)
+            VStack {
+                Form {
+                    Section(header: Text("Event Info")) {
+                        TextField("Title", text: $title)
+                            .textFieldStyle(.roundedBorder)
+                            .tint(.accentColor)
+                        
+                        TextField("Location", text: $location)
+                            .textFieldStyle(.roundedBorder)
+                        
+                        Toggle("All day", isOn: $allDay)
+                        
+                        Picker("Type", selection: $type) {
+                            Text("Academic").tag(0)
+                            Text("Other").tag(1)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    
+                    Section(header: Text("Timing")) {
+                        DatePicker("Start", selection: $startDate, displayedComponents: [.date, .hourAndMinute])
+                        DatePicker("End", selection: $endDate, displayedComponents: [.date, .hourAndMinute])
+                    }
+                }
                 
-                Toggle("All day", isOn: $allDay)
-                DatePicker("Start", selection: $startDate, displayedComponents: [.date, .hourAndMinute])
-                DatePicker("End", selection: $endDate, displayedComponents: [.date, .hourAndMinute])
-                
-                Picker("Type", selection: $type) {
-                    Text("Academic").tag(0)
-                    Text("Course").tag(1)
-                }.pickerStyle(.segmented)
-            }
-            .navigationTitle("Add Event")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                HStack{
                     Button("Save") {
                         let newEvent = EventModel()
                         newEvent.title = title
@@ -49,14 +51,16 @@ struct AddEventView: View {
                         datastore.addEvent(event: newEvent)
                         dismiss()
                     }
-                }
-                
-                ToolbarItem(placement: .cancellationAction) {
+                    
+                    
                     Button("Cancel") {
                         dismiss()
                     }
+                    
                 }
             }
+            .padding(40)
+            .navigationTitle("Add Event")
         }
     }
 }
